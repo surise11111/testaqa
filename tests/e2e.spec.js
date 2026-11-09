@@ -15,6 +15,7 @@ test('test', async ({ page }) => {
   await loginPage.login(newUser1.email, newUser1.password);
   await catalogPage.selectProduct();
   await catalogPage.saveProductinfo();
+  //1
 });
 /*
 import { test } from '@playwright/test';
