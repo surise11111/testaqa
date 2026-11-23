@@ -9,6 +9,10 @@ jobs:
     name: E2E Tests
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    env:
+       NEW_USER_1_EMAIL: ${{secrets.New_User_1_Email}}
+       NEW_USER_1_PASSWORD: ${{secrets.NEW_USER_1_PASSWORD}}
+       UI_BASE_URL: ${{secrets.UI_BASE_URL}}
     steps:
     - uses: actions/checkout@v6
     - uses: actions/setup-node@v6
@@ -31,6 +35,8 @@ jobs:
     name: API Tests
     timeout-minutes: 10
     runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: ${{secrets.API_BASE_URL}}
     steps:
     - uses: actions/checkout@v6
     - uses: actions/setup-node@v6
