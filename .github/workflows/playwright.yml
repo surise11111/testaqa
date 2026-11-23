@@ -23,7 +23,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run E2E
-      run: npx run ui-e2e
+      run: npm run ui-e2e
     - uses: actions/upload-artifact@v5
       if: ${{ !cancelled() }}
       with:
@@ -47,7 +47,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run API
-      run: npx run api
+      run: npm run api
     - uses: actions/upload-artifact@v5
       if: ${{ !cancelled() }}
       with:
