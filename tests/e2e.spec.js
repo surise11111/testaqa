@@ -7,7 +7,6 @@ import { CatalogPage } from '../page-object/catalog.page';
 
 test.use({
   viewport: { width: 800, height: 600 },
-  headless: false,
   actionTimeout: 10 * 1000,
   navigationTimeout: 10 * 1000,
 });
