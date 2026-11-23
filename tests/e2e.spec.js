@@ -1,11 +1,46 @@
-import { test } from '@playwright/test';
+import { test , devices } from '@playwright/test';
 import { RegisterPage } from '../page-object/RegisterPage.page';
 import { LoginPage } from '../page-object/Login.page';
 import { newUser1 } from '../data/testData';
 import { CatalogPage } from '../page-object/catalog.page';
 
-test.setTimeout(50 * 1000);
-test('test', async ({ page }) => {
+
+test.use({
+  viewport: { width: 800, height: 600 },
+  headless: false,
+  actionTimeout: 10 * 1000,
+  navigationTimeout: 10 * 1000,
+});
+
+test.describe('E2E: order flow', () => {
+
+  test.beforeAll(async () => {
+     console.log('beforeAll: prepare test data');
+     console.log('beforeAll: generate users');
+     console.log('beforeAll: ready');
+  });
+
+  test.beforeEach(async () => {
+     console.log('beforeEach: preconditions');    
+  })
+
+  test.afterEach(async ({page}, testInfo) => {
+      if (testInfo.status !== testInfo.expectedStatus) {
+        console.log(`afterEach: test failed: ${testInfo.title}`);
+
+        await page.screenshot( {
+          path: `test-results/${testInfo.title}-failed.png`,
+          fullPage: true,
+        })
+      }
+  })
+
+  test.afterAll(async () => {
+    console.log('afterAll; clean up test data');
+  })
+
+
+  test('test', async ({ page }) => {
   const registerPage = new RegisterPage(page);
   const loginPage = new LoginPage(page);
   const catalogPage = new CatalogPage(page);
@@ -14,9 +49,15 @@ test('test', async ({ page }) => {
   await registerPage.fillRegistartionForm(newUser1);
   await loginPage.login(newUser1.email, newUser1.password);
   await catalogPage.selectProduct();
-  await catalogPage.saveProductinfo();
+
   //1
 });
+
+
+})
+
+
+
 /*
 import { test } from '@playwright/test';
 
@@ -34,7 +75,7 @@ test('test', async ({ page }) => {
   const submitRegistrarionButton = page.locator('[id="register-button"]');
 
 
-  await page.goto('https://aqa-app.vercel.app/login');
+  await page.goto('/login');
   await registerBtn.waitFor();
   await registerBtn.click();
   await firstNameFiled.waitFor();

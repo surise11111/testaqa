@@ -16,7 +16,7 @@ export class RegisterPage {
     } 
 
     async navigate() {
-        await this.page.goto('https://aqa-app.vercel.app/login');
+        await this.page.goto('/login');
     }
 
     async fillRegistartionForm(testData) {
@@ -62,7 +62,7 @@ test('test', async ({ page }) => {
   const submitRegistrarionButton = page.locator('[id="register-button"]');
 
 
-//await page.goto('https://aqa-app.vercel.app/login');
+//await page.goto('/login');
 
   await registerBtn.waitFor();
   await registerBtn.click();

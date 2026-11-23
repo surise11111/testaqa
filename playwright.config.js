@@ -1,5 +1,7 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
 
 /**
  * Read environment variables from file.
@@ -14,6 +16,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  globalTeardown: './global-teardown.js',
   /* Run tests in files in parallel */
   fullyParallel: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -26,8 +29,14 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    timeout: 45 * 1000,
-    headless: false,
+    timeout: 60 * 1000,
+    actionTimeout: 10 * 1000,
+    navigationTimeout: 10 * 1000,
+    headless: true,
+    reporter: [
+      ['list'],
+      ['html', { open: 'never' }],
+    ],
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
 
@@ -38,10 +47,22 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: 'e2e-tests',
+      testMatch: 'e2e.spec.js',
+      use: {
+        baseURL: process.env.UI_BASE_URL,
+       // ...devices['Desktop Chrome'],
+      
+      }
     },
-
+   
+    {
+      name: 'api tests',
+      testMatch: 'api.spec.js',
+      use: {
+        baseURL: process.env.API_BASE_URL
+      }
+    }
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },

@@ -9,3 +9,13 @@ export const newUser1 = {
     streetAddress: 'Germana 15',
     zipCode: '45654',
 }
+
+export const apiDataPost = {
+    title: 'Hello AQA',
+    body: 'Test body',
+    userId: 1,
+}
+
+export const apiDataPatch = {
+    title: 'Hello AQA'
+}

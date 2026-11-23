@@ -24,20 +24,27 @@ export class CatalogPage {
         await this.tabletProduct.click();
         await this.page.waitForTimeout(5000);
         const productQty = await this.basketCount.innerText();
+        const itemsInfo = await this.getProductinfo();
         //await this.page.pause();
         expect (productQty).toBe('2');
+        return itemsInfo;
         
     }
 
-    async saveProductinfo() {
-         this.tabletNameValue = await this.tabletName.innerText();
-         this.coffeeMachineNameValue = await this.coffeeMachineName.innerText();
-         this.tabletPriceValue = await this.tabletPrice.innerText();
-         this.coffeeMachinePriceValue = await this.coffeeMachinePrice.innerText();
+    async getProductinfo() {
+         return {
+            firstProduct: {
+                name: await this.tabletName.innerText(),
+                price: await this.tabletPrice.innerText(),
+            },
 
-        //  console.log(this.tabletNameValue);
-        //  console.log(this.coffeeMachineNameValue);
-        //  console.log(this.tabletPriceValue);
-        //  console.log(this.coffeeMachinePriceValue);
+            secondProduct: {
+                name: await this.coffeeMachineName.innerText(),
+                price: await this.coffeeMachinePrice.innerText(),
+            }
+         
+    
+         }
+
     }
 }
